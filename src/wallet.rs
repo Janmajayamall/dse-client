@@ -1,9 +1,9 @@
 use super::storage::Storage;
 use ethers::types::{Address, Signature, U256};
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap,};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Receipt {
     a_address: Address,
     b_address: Address,
@@ -12,14 +12,14 @@ pub struct Receipt {
     expires_by: U256,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 enum Status {
     Active,
     Posted,
     Expired,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReceiptWithSignatures {
     receipt: Receipt,
     a_signature: Option<Signature>,

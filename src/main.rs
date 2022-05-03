@@ -1,3 +1,4 @@
+mod network;
 mod file_seeder;
 mod storage;
 mod wallet;

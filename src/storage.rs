@@ -1,4 +1,4 @@
-use super::file_seeder::Process;
+use super::file_seeder::SProcess;
 use super::wallet::ReceiptWithSignatures;
 use ethers::types::Address;
 use rocksdb::DB;
@@ -63,26 +63,28 @@ impl Storage {
         Ok(())
     }
 
-    // get active `Process`es
-    pub fn get_all_active_process(&self) -> anyhow::Result<HashMap<u32, Process>> {
+    // get active `SProcess`es
+    pub fn get_all_active_sprocess(&self) -> anyhow::Result<HashMap<u32, SProcess>> {
         let db = self.cache.lock().unwrap();
         db.get(b"active-processes")
             .map_err(|e| e.into())
             .and_then(|r| {
                 if let Some(r) = r {
-                    bincode::deserialize::<HashMap<u32, Process>>(&r).map_err(|e| e.into())
+                    bincode::deserialize::<HashMap<u32, SProcess>>(&r).map_err(|e| e.into())
                 } else {
                     Err(anyhow::anyhow!("Record does not exists"))
                 }
             })
     }
 
-    // update active `Process`
-    pub fn update_active_process(&self, process: Process) -> anyhow::Result<()> {
-        let map = self.get_all_active_process()?;
+    // update active `SProcess`
+    pub fn update_active_sprocess(&self, process: SProcess) -> anyhow::Result<()> {
+        let mut map = self.get_all_active_sprocess()?;
         map.insert(process.id, process);
         let db = self.cache.lock().unwrap();
         db.put(b"active-processes", bincode::serialize(&map)?)?;
         Ok(())
     }
+
+    //
 }
