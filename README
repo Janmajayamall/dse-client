@@ -1,0 +1,13 @@
+## Spec for Prototype
+
+1. Develop a file exchange system where leechers pay per byte to seeder (seeders are providers).
+
+## Points to consider
+
+1. Clients that avail services don't need to store account tree. They just need to store their receipts
+   and their current balance.
+   It will be nice to have that such clients can watch for invalid updates. It's not necessary since we
+   are expecting watch towers.
+2. Provider clients must store the entire account tree for two reasons - (i) They are providing services
+   so their intereaction has more variety and frequency. (ii) Since they are service providers, they can afford
+   to store the entire account tree.
